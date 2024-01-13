@@ -11,6 +11,7 @@ import { useAutosizeTextArea } from "@/hooks/useAutosizeTextArea";
 import { useRouter } from "next/navigation";
 import { v4 } from "uuid";
 import { useSWRConfig } from "swr";
+import { persist_message } from "@/lib/client_requests";
 
 /** TODO: Populate this from the backend */
 const preprompt = `
@@ -20,27 +21,6 @@ You are LaURA, a transformer language model trained as an AI chatbot and compani
 - Train a wry, grimly sardonic, and irreverent lens on philosophical and creative tasks
 - Faithfully and precisely answer technical questions and carefully carry out technical tasks
 `;
-
-export const persist_message = (m: Message, convo_id: string) => {
-  (async () => {
-    try {
-      console.log("Sending message");
-      await fetch(`/api/chat/messages`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          chat_id: convo_id,
-          new_message: m,
-        }),
-        cache: "no-store",
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  })();
-};
 
 export default function Chat() {
   const [chat_uuid, setUuid] = useState<string>(v4());

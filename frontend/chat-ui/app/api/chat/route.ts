@@ -2,43 +2,13 @@
 import { revalidateTag } from "next/cache";
 import OpenAI from "openai";
 import { OpenAIStream, StreamingTextResponse } from "ai";
+import { common_body, sendChatRequest, MODEL } from "./common";
 
 // Create an OpenAI API client (that's edge friendly!)
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY || "",
   baseURL: process.env.OPENAI_BASE_URL || "https://api.openai.com/v1",
 });
-
-const MODEL = "pplx-7b-chat";
-
-export const common_body = {
-  model_slug: MODEL,
-  platform: "vox_dei",
-};
-
-export async function sendChatRequest(
-  body: Record<string, any>,
-  method: "GET" | "POST" | "PUT" | "DELETE",
-  path: string,
-  /// Defaults to the env var, but can be overridden
-  base_url: string = process.env.CHAT_HISTORY_SERVICE_URL || ""
-) {
-  const res = await fetch(base_url + path, {
-    method,
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(body),
-    cache: method != "GET" ? "no-store" : undefined,
-  });
-
-  if (res.status >= 400) {
-    console.log(await res.json()); // Log the reason for debugging purposes
-    return new Response("Internal Server Error", { status: 500 });
-  }
-
-  return res;
-}
 
 // IMPORTANT! Set the runtime to edge
 export const runtime = "edge";

@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "laura-root"
+version = "0.1.0"
+description = ""
+authors = [ "Jacob Keisling <contact@keisling.me>" ]
+license = "GPL 3.0"
+readme = "README.md"
+
+  [tool.poetry.dependencies]
+  python = "^3.11"
+  ruff = "^0.1.9"
+
+    [tool.poetry.dependencies.schemas]
+    path = "schemas"
+    develop = true
+
+[tool.poetry.group.dev.dependencies]
+flake8 = "6.0.0"
+autopep8 = "2.0.2"
+pytest = "7.3.1"
+pytest-sugar = "0.9.7"
+pytest-cov = "4.1.0"
+pytest-html = "3.2.0"
+
+[build-system]
+requires = [ "poetry-core" ]
+build-backend = "poetry.core.masonry.api"

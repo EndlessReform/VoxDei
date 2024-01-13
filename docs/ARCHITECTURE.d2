@@ -1,0 +1,60 @@
+tailnet: Tailnet {
+  local: Dev machine {
+    annotation: {
+      icon: "./assets/vite-logo.png"
+    }
+    annotation <-> _.magi06.backend: Chat dataset CRUD
+    cleaning: {
+      icon: "./assets/jupyter-logo.svg"
+    }
+    cleaning <-> _.magi06.mongo.datasets
+    cleaning -> _._.huggingface.datasets: upload to Hub
+  }
+
+  magi06: {
+    mongo: MongoDB {
+      shape: cylinder
+      datasets: Chat datasets
+    }
+    backend: {
+      shape: diamond
+      icon: "./assets/fastapi-logo.svg"
+    }
+    chat-frontend: {
+      icon: "./assets/nextjs-icon.svg"
+    }
+    backend -> chat-frontend: OpenAI-compat API
+    backend <-> mongo.datasets: Dataset CRUD
+  }
+
+  magi02: {
+    training: Axolotl
+    inference: text-generation-inference {
+      icon: "./assets/hf-logo.svg"
+    }
+    training -> _._.huggingface.models: artifacts
+    _._.huggingface.models -> training: base model
+    _._.huggingface.models -> inference: download from Hub
+    inference -> _.magi06.backend
+  }
+}
+
+huggingface: HuggingFace {
+  datasets: Datasets {
+    shape: cylinder
+  }
+  datasets -> _.tailnet.magi02.training
+  models: Models {
+    shape: cylinder
+  }
+}
+
+openai: {
+  datasets: Chat
+  datasets -> _.tailnet.local.cleaning: GDPR export
+}
+
+supabase: {
+  datasets: Chat
+  datasets -> _.tailnet.local.cleaning: Ingest
+}

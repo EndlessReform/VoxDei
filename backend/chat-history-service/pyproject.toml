@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "chat-history-service"
+version = "0.1.0"
+description = ""
+authors = [ "Jacob Keisling <contact@keisling.me>" ]
+license = "GPL 3.0"
+readme = "README.md"
+
+  [tool.poetry.dependencies]
+  python = "^3.11"
+  fastapi = "^0.105.0"
+  pymongo = "^4.6.1"
+  pydantic = "^2.5.3"
+  uvicorn = "^0.25.0"
+  python-dotenv = "^1.0.0"
+  jsonref = "^1.1.0"
+
+    [tool.poetry.dependencies.schemas]
+    path = "../../schemas"
+    develop = true
+  
+  [[tool.poetry.packages]]
+  include = "chat-history-service"
+  from = "src"
+
+[build-system]
+requires = [ "poetry-core" ]
+build-backend = "poetry.core.masonry.api"

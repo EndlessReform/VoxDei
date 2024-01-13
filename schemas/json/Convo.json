@@ -1,0 +1,315 @@
+{
+  "$defs": {
+    "Author": {
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "role": {
+          "$ref": "#/$defs/AuthorRole"
+        }
+      },
+      "required": [
+        "name",
+        "role"
+      ],
+      "title": "Author",
+      "type": "object"
+    },
+    "AuthorRole": {
+      "enum": [
+        "user",
+        "assistant",
+        "system",
+        "tool"
+      ],
+      "title": "AuthorRole",
+      "type": "string"
+    },
+    "ContentTypes": {
+      "enum": [
+        "seed",
+        "prompt",
+        "image_prompt"
+      ],
+      "title": "ContentTypes",
+      "type": "string"
+    },
+    "EditStatus": {
+      "enum": [
+        "in_progress",
+        "todo",
+        "done"
+      ],
+      "title": "EditStatus",
+      "type": "string"
+    },
+    "ImagePrompt": {
+      "properties": {
+        "size": {
+          "title": "Size",
+          "type": "string"
+        },
+        "prompt": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Prompt"
+        },
+        "prompts": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Prompts"
+        }
+      },
+      "required": [
+        "size"
+      ],
+      "title": "ImagePrompt",
+      "type": "object"
+    },
+    "Message": {
+      "properties": {
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "content": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "items": {
+                "type": "integer"
+              },
+              "type": "array"
+            },
+            {
+              "$ref": "#/$defs/ImagePrompt"
+            }
+          ],
+          "title": "Content"
+        },
+        "parent": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Parent"
+        },
+        "children": {
+          "default": [],
+          "items": {
+            "type": "integer"
+          },
+          "title": "Children",
+          "type": "array"
+        },
+        "author": {
+          "$ref": "#/$defs/Author"
+        },
+        "create_time": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "unix timestamp or ISO 8601 datetime string",
+          "title": "Create Time"
+        },
+        "content_type": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ContentTypes"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "metadata": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/src__message__Metadata"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "title",
+        "content",
+        "author",
+        "create_time",
+        "content_type"
+      ],
+      "title": "Message",
+      "type": "object"
+    },
+    "__main____Metadata": {
+      "properties": {
+        "platform": {
+          "title": "Platform",
+          "type": "string"
+        },
+        "edit_status": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/EditStatus"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "system_message": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "System message when convo was created",
+          "title": "System Message"
+        }
+      },
+      "required": [
+        "platform",
+        "system_message"
+      ],
+      "title": "Metadata",
+      "type": "object"
+    },
+    "src__message__Metadata": {
+      "properties": {
+        "model_slug": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Model Slug"
+        },
+        "edit_status": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/EditStatus"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "original_content": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Original Content"
+        },
+        "recipient": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Recipient"
+        }
+      },
+      "title": "Metadata",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "title": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Title"
+    },
+    "create_time": {
+      "description": "unix timestamp",
+      "title": "Create Time",
+      "type": "integer"
+    },
+    "metadata": {
+      "$ref": "#/$defs/__main____Metadata"
+    },
+    "mapping": {
+      "additionalProperties": {
+        "$ref": "#/$defs/Message"
+      },
+      "title": "Mapping",
+      "type": "object"
+    },
+    "last_message": {
+      "title": "Last Message",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "create_time",
+    "metadata",
+    "mapping",
+    "last_message"
+  ],
+  "title": "Convo",
+  "type": "object"
+}

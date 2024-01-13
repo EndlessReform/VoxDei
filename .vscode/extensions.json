@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "terrastruct.d2",
+    "esbenp.prettier-vscode",
+    "nrwl.angular-console",
+    "charliermarsh.ruff"
+  ]
+}

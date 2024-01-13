@@ -1,0 +1,66 @@
+{
+    "name": "chat-history-service",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "projectType": "application",
+    "targets": {
+        "add": {
+            "executor": "@nxlv/python:add",
+            "options": {}
+        },
+        "update": {
+            "executor": "@nxlv/python:update",
+            "options": {}
+        },
+        "remove": {
+            "executor": "@nxlv/python:remove",
+            "options": {}
+        },
+        "install": {
+            "executor": "@nxlv/python:install",
+            "options": {
+                "silent": false,
+                "args": "",
+                "cacheDir": ".cache/pypoetry",
+                "verbose": false,
+                "debug": false
+            }
+        },
+        "dev": {
+            "executor": "@nxlv/python:run-commands",
+            "options": {
+                "command": "ENV=dev poetry run python src.chat-history-service.main",
+                "cwd": "backend/chat-history-service"
+            }
+        },
+        "build": {
+            "executor": "@nxlv/python:build",
+            "outputs": [
+                "{projectRoot}/dist"
+            ],
+            "options": {
+                "silent": false,
+                "verbose": true,
+                "outputPath": "{projectRoot}/dist",
+                "publish": false,
+                "lockedVersions": true,
+                "bundleLocalDependencies": true
+            }
+        },
+        "docker-build": {
+            "dependsOn": ["build"],
+            "executor": "nx:run-commands",
+            "options": {
+                "cwd": "backend/chat-history-service",
+                "command": "docker build -t chat-history-service ."
+            }
+        },
+        "lint": {
+            "executor": "@nxlv/python:ruff-check",
+            "options": {
+                "lintFilePatterns": [
+                    "./*.py"
+                ]
+            }
+        }
+    }
+}

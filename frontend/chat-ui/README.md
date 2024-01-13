@@ -17,6 +17,7 @@ Set up `.env.local`:
 OPENAI_BASE_URL="foo.com/openai"
 # Not needed at the moment since we don't have auth on backend yet
 OPENAI_API_KEY="foobar"
+CHAT_HISTORY_SERVICE_URL="http://localhost:8000"
 ```
 
 ## Development

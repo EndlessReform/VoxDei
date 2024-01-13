@@ -28,7 +28,7 @@
         "dev": {
             "executor": "@nxlv/python:run-commands",
             "options": {
-                "command": "ENV=dev poetry run python src.chat-history-service.main",
+                "command": "ENV=dev poetry run python src/chat-history-service/main.py",
                 "cwd": "backend/chat-history-service"
             }
         },

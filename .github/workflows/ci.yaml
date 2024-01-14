@@ -35,16 +35,10 @@ jobs:
       - name: Install Poetry
         if: steps.cached-poetry.outputs.cache-hit != 'true'
         uses: snok/install-poetry@v1
-      - name: Find Poetry Projects
-        id: poetry-projects
-        run: |
-          echo "POETRY_PROJECTS=$(find . -name 'poetry.lock' -exec dirname {} \; | jq -R -s -c 'split(\"\n\")[:-1]')" >> $GITHUB_ENV
-
       - name: Cache Python Dependencies
         uses: actions/cache@v3
         with:
           path: |
-            ${{ join(fromJson(env.POETRY_PROJECTS), '\n') }}
             **/.venv
           key: ${{ runner.os }}-python-${{ hashFiles('**/poetry.lock') }}
           restore-keys: |

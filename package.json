@@ -3,8 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "build": "nx run-many --target=build --all --verbose",
-    "fuck-nx": "NX_VERBOSE_LOGGING=true nx run chat-history-service:build --verbose=true"
+    "build": "nx run-many --target=build --all --verbose"
   },
   "private": true,
   "devDependencies": {

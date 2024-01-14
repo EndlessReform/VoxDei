@@ -1,6 +1,6 @@
 [tool.poetry]
-name = "laura-root"
-version = "0.1.0"
+name = "voxdei-root"
+version = "0.3.0"
 description = ""
 authors = [ "Jacob Keisling <contact@keisling.me>" ]
 license = "GPL 3.0"

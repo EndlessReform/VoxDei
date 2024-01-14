@@ -59,7 +59,7 @@
             "executor": "nx:run-commands",
             "options": {
                 "cwd": "backend/chat-history-service",
-                "command": "docker build -t ghcr.io/${GH_REPO,,}/chat-history-service:latest . && docker push ghcr.io/${GH_REPO,,}/chat-history-service:latest"
+                "command": "bash -c 'docker build -t ghcr.io/${GH_REPO,,}/chat-history-service:latest . && docker push ghcr.io/${GH_REPO,,}/chat-history-service:latest'"
             }
         },
         "lint": {

@@ -52,7 +52,7 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Convert GH_REPO to lowercase
+        run: echo "GH_REPO=$(echo '${{ github.repository }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
       - name: Publish all Docker images
         run: npx nx run-many --target=ci-build-publish --verbose
-        env:
-          GH_REPO: ${{ github.repository }}

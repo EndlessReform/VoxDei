@@ -1,5 +1,5 @@
-import { sendChatRequest, common_body } from "../route";
 import { revalidateTag } from "next/cache";
+import { common_body, sendChatRequest } from "../common";
 
 export async function POST(req: Request) {
   const { chat_id, new_message } = await req.json();

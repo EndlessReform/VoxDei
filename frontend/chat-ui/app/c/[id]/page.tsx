@@ -2,7 +2,7 @@
 import { useChat, Message } from "ai/react";
 import { ChatInput, MessagesPreview } from "@/components";
 import { v4 } from "uuid";
-import { persist_message } from "@/app/page";
+import { persist_message } from "@/lib/client_requests";
 import { useEffect } from "react";
 
 const getChatData = async (id: string): Promise<Message[]> => {

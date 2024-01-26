@@ -58,6 +58,7 @@ export async function POST(req: Request) {
     model: MODEL,
     stream: true,
     messages: messages,
+    max_tokens: 1024,
   });
 
   // Convert the response into a friendly text-stream

@@ -11,6 +11,7 @@
 
 # Ignore model weights!
 infra/data
+data
 
 # wipe out local datasets
 local_datasets

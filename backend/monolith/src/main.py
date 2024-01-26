@@ -1,15 +1,10 @@
 from dotenv import load_dotenv
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from huggingface_hub import InferenceClient
-from transformers import AutoTokenizer
 import os
-from pydantic import BaseModel
 from pymongo import MongoClient
-from typing import List
 import logging
 
-from chat_hf import app as chat_app
 from convos import app as convos_app
 from dependencies.shared_state import get_shared_state
 
@@ -48,15 +43,9 @@ async def startup_event():
     except Exception as e:
         logger.error(f"Failed to connect to MongoDB: {e}")
 
-    # Yes, this violates separation of concerns, but FastAPI is too prissy to let me do this on a sub-app level
-    hf_client = InferenceClient(os.getenv("INFERENCE_SERVER_URL"))
-    tokenizer = AutoTokenizer.from_pretrained("teknium/OpenHermes-2-Mistral-7B")
-
     shared_state.set_state(
         {
             "dalle_collection": dalle_collection,
-            "hf_client": hf_client,
-            "tokenizer": tokenizer,
             "laura_db": laura_db,
             "mongo_client": mongo_client,
         }
@@ -74,7 +63,6 @@ def health():
 
 
 app.mount("/convos", convos_app)
-app.mount("/openai", chat_app)
 
 if __name__ == "__main__":
     import uvicorn

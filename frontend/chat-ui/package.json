@@ -6,7 +6,7 @@
     "dev": "next dev -p 8080",
     "build": "next build",
     "start": "next start -p 8080",
-    "ci-build-publish": "cp ../../package-lock.json ./package-lock.json; docker build -t chat-ui:latest . && docker push ghcr.io/endlessreform/voxdei/chat-ui:latest; rm ./package-lock.json",
+    "ci-build-publish": "cp ../../package-lock.json ./package-lock.json; docker build -t ghcr.io/endlessreform/voxdei/chat-ui:latest . && docker push ghcr.io/endlessreform/voxdei/chat-ui:latest; rm ./package-lock.json",
     "lint": "next lint"
   },
   "dependencies": {

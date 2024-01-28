@@ -1,0 +1,14 @@
+version: '2'
+services:
+  chat-history-service:
+    image: ghcr.io/endlessreform/voxdei/chat-history-service:latest
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+  chat-ui:
+    image: ghcr.io/endlessreform/voxdei/chat-ui:latest
+    ports:
+      - "8192:8080"
+    env_file:
+      - .env
